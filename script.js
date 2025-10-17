@@ -7,6 +7,26 @@ document.addEventListener('DOMContentLoaded', () => {
         easing: 'ease-out'
     });
 
+    // Initialize copy email functionality
+    window.copyEmail = function() {
+        const emailText = document.getElementById('email-text').textContent;
+        navigator.clipboard.writeText(emailText).then(() => {
+            const button = document.querySelector('button[onclick="copyEmail()"]');
+            const originalText = button.innerHTML;
+            button.innerHTML = `
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                </svg>
+                Copied!
+            `;
+            setTimeout(() => {
+                button.innerHTML = originalText;
+            }, 2000);
+        }).catch(err => {
+            console.error('Failed to copy text: ', err);
+        });
+    };
+
     // Initialize all videos
     const allVideos = document.querySelectorAll('video');
 
